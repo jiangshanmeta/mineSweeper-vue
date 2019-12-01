@@ -1,38 +1,67 @@
 <template>
-    <div
-        class="mine-sweeper-container"
-    >
+    <div class="game-container">
         <div
-            v-for="i in height"
-            :key="i"
-            class="mine-sweeper-row"
+            class="mine-sweeper-container"
+            @contextmenu.prevent
         >
             <div
-                v-for="j in width"
-                :key="j"
-                class="mine-sweeper-item"
-                :class="{'is-open':openStatus[(i - 1) * width + j - 1]}"
-                @click.left="handleLeftClick(i-1,j-1)"
-                @click.right="handleRightClick(i-1,j-1)"
-                @contextmenu.prevent
+                v-for="i in height"
+                :key="i"
+                class="mine-sweeper-row"
             >
-                <span
-                    v-if="markStatus[(i-1)*width+(j-1)] === 1"
-                    class="iconfont"
-                >&#xe778;</span>
-                <span
-                    v-else-if="markStatus[(i-1)*width+(j-1)] === 2"
-                    class="iconfont"
-                >&#xe720;</span>
-                <template v-else-if="openStatus[(i-1)*width+(j-1)]">
+                <div
+                    v-for="j in width"
+                    :key="j"
+                    class="mine-sweeper-item"
+                    :class="{'is-open':openStatus[(i - 1) * width + j - 1]}"
+                    @click.left="handleLeftClick(i-1,j-1)"
+                    @click.right="handleRightClick(i-1,j-1)"
+                >
                     <span
-                        v-if="mines[(i-1)*width+(j-1)]"
+                        v-if="markStatus[(i-1)*width+(j-1)] === 1"
                         class="iconfont"
-                    >&#xe63a;</span>
-                    <span v-else-if="neighbourMineCount[(i-1)*width+(j-1)]>0">
-                        {{ neighbourMineCount[(i-1)*width+(j-1)] }}
-                    </span>
-                </template>
+                    >&#xe778;</span>
+                    <span
+                        v-else-if="markStatus[(i-1)*width+(j-1)] === 2"
+                        class="iconfont"
+                    >&#xe720;</span>
+                    <template v-else-if="openStatus[(i-1)*width+(j-1)]">
+                        <span
+                            v-if="mines[(i-1)*width+(j-1)]"
+                            class="iconfont"
+                        >&#xe63a;</span>
+                        <span v-else-if="neighbourMineCount[(i-1)*width+(j-1)]>0">
+                            {{ neighbourMineCount[(i-1)*width+(j-1)] }}
+                        </span>
+                    </template>
+                </div>
+            </div>
+        </div>
+        <div class="panel-container">
+            <div class="panel-data-container">
+                <span
+                    class="iconfont"
+                    style="font-size: 60px;"
+                >&#xe778;</span>
+                <div>
+                    {{ selectedMineCount }} / {{ mineCount }}
+                </div>
+            </div>
+            <div>
+                <button
+                    class="mine-sweeper-button"
+                    @click="reStart"
+                >
+                    重开一局
+                </button>
+
+                <button
+                    class="mine-sweeper-button"
+                    style="margin-top: 15px;"
+                    @click="$emit('selectDifficulty')"
+                >
+                    改变难度
+                </button>
             </div>
         </div>
     </div>
@@ -108,6 +137,9 @@ export default {
         },
     },
     methods: {
+        reStart () {
+            this.init(this.width, this.height, this.mineCount);
+        },
         init (width, height, mineCount) {
             this.width = width;
             this.height = height;
@@ -188,6 +220,12 @@ export default {
 </script>
 
 <style scoped>
+.game-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 15px;
+}
+
 .mine-sweeper-container {
     overflow: hidden;
     width: fit-content;
@@ -212,6 +250,18 @@ export default {
 
 .mine-sweeper-item.is-open {
     background-color: #dededc;
+}
+
+.panel-container {
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.panel-data-container {
+    padding-top: 15px;
+    text-align: center;
 }
 
 </style>
