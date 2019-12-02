@@ -39,17 +39,74 @@
                 </div>
             </div>
             <div class="select-difficulty-section">
-                <button @click="isShowCustomize = false">
-                    www
-                </button>
+                <div>
+                    <div class="form-group">
+                        <label class="form-label">
+                            宽度
+                        </label>
+                        <MineSweeperInputNumber
+                            v-model="width"
+                            class="form-content"
+                            :max="50"
+                            :min="1"
+                        />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">
+                            高度
+                        </label>
+                        <MineSweeperInputNumber
+                            v-model="height"
+                            class="form-content"
+                            :max="50"
+                            :min="1"
+                        />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">
+                            雷数
+                        </label>
+                        <MineSweeperInputNumber
+                            v-model="mineCount"
+                            class="form-content"
+                            :max="width*height"
+                            :min="1"
+                        />
+                    </div>
+
+                    <div class="form-group">
+                        <button
+                            class="mine-sweeper-button"
+                            @click="$emit('showGame',width,height,mineCount)"
+                        >
+                            玩游戏
+                        </button>
+                    </div>
+
+                    <div class="form-group">
+                        <button
+                            class="mine-sweeper-button"
+                            @click="isShowCustomize = false"
+                        >
+                            取消
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import MineSweeperInputNumber from './MineSweeperInputNumber';
+
 export default {
     name: 'SelectDifficulty',
+    components: {
+        MineSweeperInputNumber,
+    },
     data () {
         return {
             isShowCustomize: false,
@@ -78,6 +135,10 @@ export default {
 .select-difficulty-section {
     width: 100%;
     flex: auto 0 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .select-difficulty-row {
@@ -93,5 +154,18 @@ export default {
     border-radius: 8px;
     text-align: center;
     padding-top: 120px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-label {
+    width: 80px;
+    float: left;
+}
+
+.form-content {
+    margin-left: 80px;
 }
 </style>

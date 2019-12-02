@@ -253,7 +253,7 @@ export default {
 }
 
 .panel-container {
-    width: fit-content;
+    width: 180px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;

@@ -1,24 +1,5 @@
 # minesweeper-vue
 
-## Project setup
-```
-npm install
-```
+Vue实现扫雷游戏
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+游戏界面参考Ubuntu19.04自带的扫雷

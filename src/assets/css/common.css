@@ -24,10 +24,8 @@
 
 .mine-sweeper-button {
     display: block;
-    width: 150px;
+    width: 100%;
     height: 50px;
     border-radius: 5px;
     cursor: pointer;
-    margin-left: auto;
-    margin-right: auto;
 }
