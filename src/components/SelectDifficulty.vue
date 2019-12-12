@@ -134,7 +134,7 @@ export default {
 
 .select-difficulty-section {
     width: 100%;
-    flex: auto 0 0;
+    flex: 0 0 auto;
     display: flex;
     flex-direction: column;
     justify-content: center;

@@ -119,7 +119,6 @@ export default {
     },
     watch: {
         selectedMineCount () {
-            this.$emit('updateSelectedMineCount', this.selectedMineCount);
             if (this.selectedMineCount === this.mineCount) {
                 const match = this.mines.every((isMine, index) => {
                     if ((isMine && this.markStatus[index] === 1) || (!isMine && this.markStatus[index] !== 1)) {
