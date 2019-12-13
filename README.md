@@ -6,4 +6,4 @@ Vue实现扫雷游戏
 
 [在线链接](https://jiangshanmeta.github.io/mine-sweeper-vue/index.html)
 
-[我的课程主页](https://study.163.com/provider/480000001947591/index.htm)
+[React实现扫雷](https://github.com/jiangshanmeta/minesweeper-react)

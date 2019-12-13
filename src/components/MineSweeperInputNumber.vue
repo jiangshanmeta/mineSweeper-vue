@@ -2,7 +2,7 @@
     <div class="input-group">
         <div
             class="input-group-addon"
-            @click="dpMinus"
+            @click="doMinus"
         >
             -
         </div>
@@ -61,7 +61,7 @@ export default {
         max: 'handleMinMaxChange',
     },
     methods: {
-        dpMinus () {
+        doMinus () {
             this.model = this.value - this.step;
         },
         doPlus () {
@@ -81,6 +81,7 @@ export default {
 
 <style scoped>
 .input-group {
+    margin-left: 80px;
     display: flex;
 }
 
