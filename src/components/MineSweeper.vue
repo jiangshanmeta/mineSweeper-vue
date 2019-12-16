@@ -68,16 +68,41 @@
 </template>
 
 <script>
+function shuffle (mines) {
+    for (let i = 1; i < mines.length; i++) {
+        const randomIndex = Math.floor(Math.random() * (i + 1));
+        const tmp = mines[randomIndex];
+        mines[randomIndex] = mines[i];
+        mines[i] = tmp;
+    }
+}
+
 export default {
+    props: {
+        play: {
+            type: Boolean,
+            required: true,
+        },
+        width: {
+            type: Number,
+            required: true,
+        },
+        height: {
+            type: Number,
+            required: true,
+        },
+        mineCount: {
+            type: Number,
+            required: true,
+        },
+    },
     data () {
         return {
-            width: 0,
-            height: 0,
-            mineCount: 0,
             isEnd: false,
             mines: [],
             openStatus: [],
             markStatus: [],
+            selectedMineCount: 0,
         };
     },
     computed: {
@@ -107,17 +132,14 @@ export default {
             }
             return result;
         },
-        selectedMineCount () {
-            let count = 0;
-            for (let i = 0; i < this.markStatus.length; i++) {
-                if (this.markStatus[i] === 1) {
-                    count++;
-                }
-            }
-            return count;
-        },
     },
     watch: {
+        play () {
+            if (!this.play) {
+                return;
+            }
+            this.init(this.width, this.height, this.mineCount);
+        },
         selectedMineCount () {
             if (this.selectedMineCount === this.mineCount) {
                 const match = this.mines.every((isMine, index) => {
@@ -140,27 +162,17 @@ export default {
             this.init(this.width, this.height, this.mineCount);
         },
         init (width, height, mineCount) {
-            this.width = width;
-            this.height = height;
-            this.mineCount = mineCount;
             this.isEnd = false;
             const total = width * height;
             const mines = new Array(total).fill(0);
             for (let i = 0; i < mineCount; i++) {
                 mines[i] = 1;
             }
-            this.shuffle(mines);
+            shuffle(mines);
             this.mines = mines;
             this.openStatus = new Array(total).fill(0);
             this.markStatus = new Array(total).fill(0);
-        },
-        shuffle (mines) {
-            for (let i = 1; i < mines.length; i++) {
-                const randomIndex = Math.floor(Math.random() * (i + 1));
-                const tmp = mines[randomIndex];
-                mines[randomIndex] = mines[i];
-                mines[i] = tmp;
-            }
+            this.selectedMineCount = 0;
         },
         handleLeftClick (x, y) {
             if (this.isEnd) {
@@ -213,6 +225,11 @@ export default {
                 return;
             }
             this.markStatus.splice(index, 1, (this.markStatus[index] + 1) % 3);
+            if (this.markStatus[index] === 1) {
+                this.selectedMineCount++;
+            } else if (this.markStatus[index] === 2) {
+                this.selectedMineCount--;
+            }
         },
     },
 };

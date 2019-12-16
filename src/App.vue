@@ -10,9 +10,12 @@
             />
 
             <MineSweeper
-                ref="mineSweeper"
+                :play="isShowGame"
+                :width="width"
+                :height="height"
+                :mine-count="mineCount"
                 class="app-section"
-                @selectDifficulty="isShowGame = false"
+                @selectDifficulty="selectDifficulty"
             />
         </div>
     </div>
@@ -31,12 +34,20 @@ export default {
     data () {
         return {
             isShowGame: false,
+            width: 0,
+            height: 0,
+            mineCount: 0,
         };
     },
     methods: {
         showGame (width, height, mineCount) {
-            this.$refs.mineSweeper.init(width, height, mineCount);
+            this.width = width;
+            this.height = height;
+            this.mineCount = mineCount;
             this.isShowGame = true;
+        },
+        selectDifficulty () {
+            this.isShowGame = false;
         },
     },
 };
