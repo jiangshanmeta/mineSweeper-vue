@@ -68,8 +68,8 @@
 </template>
 
 <script>
-function shuffle (mines) {
-    for (let i = 1; i < mines.length; i++) {
+function shuffle (mines, start) {
+    for (let i = start; i < mines.length; i++) {
         const randomIndex = Math.floor(Math.random() * (i + 1));
         const tmp = mines[randomIndex];
         mines[randomIndex] = mines[i];
@@ -109,7 +109,7 @@ export default {
         neighbourMineCount () {
             const result = new Array(this.width * this.height).fill(0);
             for (let i = 0; i < result.length; i++) {
-                if (this.mines[i]) {
+                if (!this.mines[i]) {
                     continue;
                 }
                 const y = i % this.width;
@@ -124,9 +124,7 @@ export default {
                         if (newY < 0 || newY === this.width) {
                             continue;
                         }
-                        if (this.mines[newX * this.width + newY]) {
-                            result[i]++;
-                        }
+                        result[newX * this.width + newY]++;
                     }
                 }
             }
@@ -168,7 +166,7 @@ export default {
             for (let i = 0; i < mineCount; i++) {
                 mines[i] = 1;
             }
-            shuffle(mines);
+            shuffle(mines, mineCount);
             this.mines = mines;
             this.openStatus = new Array(total).fill(0);
             this.markStatus = new Array(total).fill(0);
