@@ -21,7 +21,7 @@
     "babel-eslint": "^10.0.3",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
-    "stylelint": "^14.11.0",
+    "stylelint": "^15.10.1",
     "stylelint-config-standard": "^19.0.0",
     "vue-template-compiler": "^2.6.10"
   }
